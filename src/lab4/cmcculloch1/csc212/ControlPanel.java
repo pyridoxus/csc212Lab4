@@ -3,48 +3,30 @@ package lab4.cmcculloch1.csc212;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 public class ControlPanel extends JPanel {
 
-	private String[] dimension = {"2D", "3D"};
-    private JLabel createLabel;
-    private JComboBox dimensionBox;
-    private JButton computeButton;
-    private JButton quitButton;
+    private Dimensions dim = new Dimensions();
     private NumberPad numberPad;
-	public ControlPanel() {
-		int d = 0;	// Used for ensuring sync'd objects at startup
-		// Shape creation label and combo box
-		createLabel = new JLabel("Select Dimension");
-		add(createLabel);   
-		dimensionBox = new JComboBox(dimension);
-		dimensionBox.setSelectedIndex(d);	// Just to ensure sync'd objects
-		dimensionBox.addActionListener(new DimensionBoxListener());
-		add(dimensionBox);
-	 
-        // Compute areas button
-        computeButton = new JButton("Compute areas");
-        add(computeButton);
+    private TopPanel topPanel;
 
+    public ControlPanel() {
+		int d = 0;	// Used for ensuring sync'd objects at startup
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
+		 
         // Number Pad
         numberPad = new NumberPad();
-        numberPad.setState(dimension[d]);	// Just to ensure sync'd objects
-        add(numberPad);
+        numberPad.setState(dim.getDimension(d));// Just to ensure sync'd objects
         
-        // Quit button
-        quitButton = new JButton("Quit");
-        add(quitButton);
+        // Top Button Panel
+        topPanel = new TopPanel(d);	// Just to ensure sync'd objects
+        topPanel.setNumberPad(numberPad);
+        
+        add(topPanel);
+        add(numberPad);
 	}
 
-	// Listener for createBox
-	private class DimensionBoxListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			numberPad.setState(dimensionBox.getSelectedItem().toString());
-		}
-	}
 }
