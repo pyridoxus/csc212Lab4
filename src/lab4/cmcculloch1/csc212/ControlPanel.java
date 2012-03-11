@@ -1,5 +1,7 @@
 package lab4.cmcculloch1.csc212;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,6 +24,9 @@ public class ControlPanel extends JPanel {
 		textArea = new JTextArea(5, 20);
 		JScrollPane scrollPane = new JScrollPane(textArea); 
 		textArea.setEditable(false);
+		Font font = new Font("Monospaced", Font.PLAIN, 12);
+        textArea.setFont(font);
+        textArea.setForeground(Color.blue);
 		 
         // Number Pad
         numberPad = new NumberPad();
@@ -33,6 +38,7 @@ public class ControlPanel extends JPanel {
         // GroupLayout. Then, I wouldn't have to pass numberPad anywhere...
         topPanel.setNumberPad(numberPad);
         
+        textArea.setText("Hello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\n");
         add(topPanel);
         add(scrollPane);
         add(numberPad);
