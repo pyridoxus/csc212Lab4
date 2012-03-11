@@ -16,11 +16,13 @@ public class ControlPanel extends JPanel {
     private NumberPad numberPad;
     private TopPanel topPanel;
     private JTextArea textArea;
+    private JTextArea textBox;
 
     public ControlPanel() {
 		int d = 0;	// Used for ensuring sync'd objects at startup
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
+		// Large text area to contain history of actions.
 		textArea = new JTextArea(5, 20);
 		JScrollPane scrollPane = new JScrollPane(textArea); 
 		textArea.setEditable(false);
@@ -28,10 +30,16 @@ public class ControlPanel extends JPanel {
         textArea.setFont(font);
         textArea.setForeground(Color.blue);
 		 
+        // Text area for actively entered text (via buttons).
+		textBox = new JTextArea(1, 20);
+		textBox.setEditable(false);
+        textBox.setFont(font);
+        textBox.setForeground(Color.blue);
+
         // Number Pad
         numberPad = new NumberPad();
         numberPad.setState(dim.getDimension(d));// Just to ensure sync'd objects
-        numberPad.setTextArea(textArea);
+        numberPad.setTexts(textBox, textArea);
         
         // Top Button Panel
         topPanel = new TopPanel(d);	// Just to ensure sync'd objects
@@ -40,8 +48,10 @@ public class ControlPanel extends JPanel {
         topPanel.setNumberPad(numberPad);
         
         textArea.setText("Hello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\n");
+        textBox.setText("(3.14159265358979, 3.14159265358979, 3.14159265358979)");
         add(topPanel);
         add(scrollPane);
+        add(textBox);
         add(numberPad);
 	}
 
