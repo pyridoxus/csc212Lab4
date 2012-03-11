@@ -31,6 +31,7 @@ public class ControlPanel extends JPanel {
         // Number Pad
         numberPad = new NumberPad();
         numberPad.setState(dim.getDimension(d));// Just to ensure sync'd objects
+        numberPad.setTextArea(textArea);
         
         // Top Button Panel
         topPanel = new TopPanel(d);	// Just to ensure sync'd objects
