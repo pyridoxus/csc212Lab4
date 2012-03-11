@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class TopPanel extends JPanel {
@@ -19,6 +20,7 @@ public class TopPanel extends JPanel {
     public TopPanel(int init){
         // Quit button
         quitButton = new JButton("Quit");
+    	quitButton.addActionListener(new QuitButtonListener());
         
 		// Shape dimension label and combo box
 		dimensionLabel = new JLabel("Select Dimension");
@@ -36,11 +38,25 @@ public class TopPanel extends JPanel {
     public void setNumberPad(NumberPad n){
     	numberPad = n;
     }
-	// 	Listener for dimensionBox
+
+    // 	Listener for dimensionBox
    	private class DimensionBoxListener implements ActionListener {
   		@Override
    		public void actionPerformed(ActionEvent e) {
    			numberPad.setState(dimensionBox.getSelectedItem().toString());
+   		}
+   	}
+
+    // 	Listener for quitButton
+   	private class QuitButtonListener implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(JOptionPane.showConfirmDialog(null,
+  					"Are you sure you want to quit?",
+  					"Exit?", JOptionPane.YES_NO_OPTION,
+  					JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+  	   			System.exit(0);
+  			}
    		}
    	}
 }
