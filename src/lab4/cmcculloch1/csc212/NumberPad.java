@@ -27,6 +27,13 @@ public class NumberPad extends JPanel {
 	}
 	
 	public void setState(String state) {
-		
+		if(state == "2D") {
+			button[15].setEnabled(false);
+			button[16].setEnabled(false);
+		}
+		else {
+			button[15].setEnabled(true);
+			button[16].setEnabled(true);
+		}
 	}
 }

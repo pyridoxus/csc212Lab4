@@ -17,10 +17,12 @@ public class ControlPanel extends JPanel {
     private JButton quitButton;
     private NumberPad numberPad;
 	public ControlPanel() {
+		int d = 0;	// Used for ensuring sync'd objects at startup
 		// Shape creation label and combo box
 		createLabel = new JLabel("Select Dimension");
 		add(createLabel);   
 		dimensionBox = new JComboBox(dimension);
+		dimensionBox.setSelectedIndex(d);	// Just to ensure sync'd objects
 		dimensionBox.addActionListener(new DimensionBoxListener());
 		add(dimensionBox);
 	 
@@ -30,6 +32,7 @@ public class ControlPanel extends JPanel {
 
         // Number Pad
         numberPad = new NumberPad();
+        numberPad.setState(dimension[d]);	// Just to ensure sync'd objects
         add(numberPad);
         
         // Quit button
