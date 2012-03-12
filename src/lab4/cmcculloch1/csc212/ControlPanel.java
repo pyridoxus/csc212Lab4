@@ -38,8 +38,8 @@ public class ControlPanel extends JPanel {
 
         // Number Pad
         numberPad = new NumberPad();
+        numberPad.setTexts(textBox, textArea); // This line must be before next
         numberPad.setState(dim.getDimension(d));// Just to ensure sync'd objects
-        numberPad.setTexts(textBox, textArea);
         
         // Top Button Panel
         topPanel = new TopPanel(d);	// Just to ensure sync'd objects

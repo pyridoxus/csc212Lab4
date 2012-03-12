@@ -88,6 +88,8 @@ public class NumberPad extends JPanel {
 	}
 	
 	public void setState(String state) {
+		// Stack and working variables are cleared everytime the state changes.
+		clear();
 		if(state == "2D") {
 			button[18].setEnabled(false);
 			button[19].setEnabled(false);
@@ -129,6 +131,13 @@ public class NumberPad extends JPanel {
 		return s[var];
 	}
 	
+	private void clear() {
+		textArea.setText("");
+		textBox.setText("");
+		var = 0;
+		for(int i = 0; i < 3; i++) work[i] = "";
+	}
+	
 	// 	Listener for DeleteButton
    	private class DeleteListener implements ActionListener {
   		@Override
@@ -153,10 +162,7 @@ public class NumberPad extends JPanel {
    	private class ClearListener implements ActionListener {
   		@Override
    		public void actionPerformed(ActionEvent e) {
-   			textArea.setText("");
-   			textBox.setText("");
-   			var = 0;
-   			for(int i = 0; i < 3; i++) work[i] = "";
+  			clear();
    	  		debugPrint("ClearListener");
    		}
    	}
