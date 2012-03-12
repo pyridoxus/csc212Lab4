@@ -332,7 +332,17 @@ public class NumberPad extends JPanel {
    		public void actionPerformed(ActionEvent e) {
   			if(var < maxVar) {	// All entered?
   				if(var == -1) var = 0;	// Something is being entered.
-  				work[var] += "0";
+  				if(work.length > 0){
+  					if(work[var].contains("-")) {
+  						work[var] = work[var].substring(1, work[var].length());
+  					}
+  					else {
+  						work[var] = "-" + work[var];
+  					}
+  				}
+  				else {
+  					work[var] = "-";
+  				}
   	  			textBox.setText(buildText());
   			}
   			debugPrint("ListenerNegate");
