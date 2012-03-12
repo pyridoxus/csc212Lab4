@@ -30,62 +30,29 @@ public class NumberPad extends JPanel {
 			if(i < 3) button[i].setForeground(Color.black);
 			else if(i < 15) button[i].setForeground(Color.blue);
 			add(button[i]);
-			initListener(i);
 		}
+		initListeners();
 		button[17].setForeground(Color.red);
 		for(int i = 0; i < 3; i++) work[i] = "";
 		functionButtons(false);
 	}
 	
-	private void initListener(int i) {
-		switch(i)
-		{
-			case 0:	// Delete char button
-		    	button[i].addActionListener(new DeleteListener());
-			break;
-			case 1:	// Clear button
-		    	button[i].addActionListener(new ClearListener());
-			break;
-			case 2:	// Next button
-		    	button[i].addActionListener(new NextListener());
-			break;
-			case 3:	// Number buttons
-				button[i].addActionListener(new Listener7());
-			break;
-			case 4:	// Number buttons
-				button[i].addActionListener(new Listener8());
-			break;
-			case 5:	// Number buttons
-				button[i].addActionListener(new Listener9());
-			break;
-			case 6:	// Number buttons
-				button[i].addActionListener(new Listener4());
-			break;
-			case 7:	// Number buttons
-				button[i].addActionListener(new Listener5());
-			break;
-			case 8:	// Number buttons
-				button[i].addActionListener(new Listener6());
-			break;
-			case 9:	// Number buttons
-				button[i].addActionListener(new Listener1());
-			break;
-			case 10:	// Number buttons
-				button[i].addActionListener(new Listener2());
-			break;
-			case 11:	// Number buttons
-				button[i].addActionListener(new Listener3());
-			break;
-			case 12:	// Number buttons
-				button[i].addActionListener(new Listener0());
-			break;
-			case 13:	// Number buttons
-				button[i].addActionListener(new ListenerDot());
-			break;
-			case 14:	// Number buttons
-				button[i].addActionListener(new ListenerNegate());
-			break;
-		}
+	private void initListeners() {
+    	button[0].addActionListener(new DeleteListener()); // Delete char
+    	button[1].addActionListener(new ClearListener()); // Clear button
+    	button[2].addActionListener(new NextListener()); // Next button
+		button[3].addActionListener(new Listener7()); // Number button
+		button[4].addActionListener(new Listener8()); // Number button
+		button[5].addActionListener(new Listener9()); // Number button
+		button[6].addActionListener(new Listener4()); // Number button
+		button[7].addActionListener(new Listener5()); // Number button
+		button[8].addActionListener(new Listener6()); // Number button
+		button[9].addActionListener(new Listener1()); // Number button
+		button[10].addActionListener(new Listener2()); // Number button
+		button[11].addActionListener(new Listener3()); // Number button
+		button[12].addActionListener(new Listener0()); // Number button
+		button[13].addActionListener(new ListenerDot()); //Decimal point
+		button[14].addActionListener(new ListenerNegate()); // Negate
 	}
 	
 	public void setState(String state) {
