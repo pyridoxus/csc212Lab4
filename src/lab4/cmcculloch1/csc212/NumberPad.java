@@ -48,6 +48,42 @@ public class NumberPad extends JPanel {
 			case 2:	// Next button
 		    	button[i].addActionListener(new NextListener());
 			break;
+			case 3:	// Number buttons
+				button[i].addActionListener(new Listener7());
+			break;
+			case 4:	// Number buttons
+				button[i].addActionListener(new Listener8());
+			break;
+			case 5:	// Number buttons
+				button[i].addActionListener(new Listener9());
+			break;
+			case 6:	// Number buttons
+				button[i].addActionListener(new Listener4());
+			break;
+			case 7:	// Number buttons
+				button[i].addActionListener(new Listener5());
+			break;
+			case 8:	// Number buttons
+				button[i].addActionListener(new Listener6());
+			break;
+			case 9:	// Number buttons
+				button[i].addActionListener(new Listener1());
+			break;
+			case 10:	// Number buttons
+				button[i].addActionListener(new Listener2());
+			break;
+			case 11:	// Number buttons
+				button[i].addActionListener(new Listener3());
+			break;
+			case 12:	// Number buttons
+				button[i].addActionListener(new Listener0());
+			break;
+			case 13:	// Number buttons
+				button[i].addActionListener(new ListenerDot());
+			break;
+			case 14:	// Number buttons
+				button[i].addActionListener(new ListenerNegate());
+			break;
 		}
 	}
 	
@@ -144,6 +180,162 @@ public class NumberPad extends JPanel {
   				
   			}
   			debugPrint("NextListener");
+   		}
+   	}
+
+   	// 	Listener for 0 Button
+   	private class Listener0 implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var < maxVar) {	// All entered?
+  				if(var == -1) var = 0;	// Something is being entered.
+  				work[var] += "0";
+  	  			textBox.setText(buildText());
+  			}
+  			debugPrint("Listener0");
+   		}
+   	}
+
+   	// 	Listener for 1 Button
+   	private class Listener1 implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var < maxVar) {	// All entered?
+  				if(var == -1) var = 0;	// Something is being entered.
+  				work[var] += "1";
+  	  			textBox.setText(buildText());
+  			}
+  			debugPrint("Listener1");
+   		}
+   	}
+
+   	// 	Listener for 2 Button
+   	private class Listener2 implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var < maxVar) {	// All entered?
+  				if(var == -1) var = 0;	// Something is being entered.
+  				work[var] += "2";
+  	  			textBox.setText(buildText());
+  			}
+  			debugPrint("Listener2");
+   		}
+   	}
+
+   	// 	Listener for 3 Button
+   	private class Listener3 implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var < maxVar) {	// All entered?
+  				if(var == -1) var = 0;	// Something is being entered.
+  				work[var] += "3";
+  	  			textBox.setText(buildText());
+  			}
+  			debugPrint("Listener3");
+   		}
+   	}
+
+   	// 	Listener for 4 Button
+   	private class Listener4 implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var < maxVar) {	// All entered?
+  				if(var == -1) var = 0;	// Something is being entered.
+  				work[var] += "4";
+  	  			textBox.setText(buildText());
+  			}
+  			debugPrint("Listener4");
+   		}
+   	}
+
+   	// 	Listener for 5 Button
+   	private class Listener5 implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var < maxVar) {	// All entered?
+  				if(var == -1) var = 0;	// Something is being entered.
+  				work[var] += "5";
+  	  			textBox.setText(buildText());
+  			}
+  			debugPrint("Listener5");
+   		}
+   	}
+
+   	// 	Listener for 6 Button
+   	private class Listener6 implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var < maxVar) {	// All entered?
+  				if(var == -1) var = 0;	// Something is being entered.
+  				work[var] += "6";
+  	  			textBox.setText(buildText());
+  			}
+  			debugPrint("Listener6");
+   		}
+   	}
+
+   	// 	Listener for 7 Button
+   	private class Listener7 implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var < maxVar) {	// All entered?
+  				if(var == -1) var = 0;	// Something is being entered.
+  				work[var] += "7";
+  	  			textBox.setText(buildText());
+  			}
+  			debugPrint("Listener7");
+   		}
+   	}
+
+   	// 	Listener for 8 Button
+   	private class Listener8 implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var < maxVar) {	// All entered?
+  				if(var == -1) var = 0;	// Something is being entered.
+  				work[var] += "8";
+  	  			textBox.setText(buildText());
+  			}
+  			debugPrint("Listener8");
+   		}
+   	}
+
+   	// 	Listener for 9 Button
+   	private class Listener9 implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var < maxVar) {	// All entered?
+  				if(var == -1) var = 0;	// Something is being entered.
+  				work[var] += "9";
+  	  			textBox.setText(buildText());
+  			}
+  			debugPrint("Listener9");
+   		}
+   	}
+
+   	// 	Listener for Dot Button
+   	private class ListenerDot implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var < maxVar) {	// All entered?
+  				if(var == -1) var = 0;	// Something is being entered.
+  				work[var] += ".";
+  	  			textBox.setText(buildText());
+  			}
+  			debugPrint("ListenerDot");
+   		}
+   	}
+
+   	// 	Listener for Negate Button
+   	private class ListenerNegate implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var < maxVar) {	// All entered?
+  				if(var == -1) var = 0;	// Something is being entered.
+  				work[var] += "0";
+  	  			textBox.setText(buildText());
+  			}
+  			debugPrint("ListenerNegate");
    		}
    	}
 }
