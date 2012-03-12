@@ -8,132 +8,98 @@ public class MatrixInterface {
 	private Point p;
 	private Point x;
 	private Matrix m;
+	private ArrayList<Matrix> array = new ArrayList<Matrix>();
 	
 	public MatrixInterface() {
-		ArrayList<Matrix> array = new ArrayList<Matrix>();
-
-		int n, u, quit;
-		setDim(2);
-		
-//		p.userSet("initial position");
-//		System.out.print(p);
-//		quit = 1;	// Quit flag
-//		n = 0;	// Index used for outputting to console
-//		while(quit == 1)
-//		{
-//			u = menu.doMenu(++n);
-//			if(dim == 2) m = new Matrix2D();
-//			else m = new Matrix3D();
-//			switch(u)
-//			{
-//				case 1:
-//					x.userSet("translation");
-//					m.initWorkTranslate(x);
-//				break;
-//				case 2:
-//					x.userSet("scale");
-//					m.initWorkScale(x);
-//				break;
-//				case 3:
-//					// If entering this selection for 2D matrices, the matrix
-//					// added to the array defaults to the identity matrix, and
-//					// an error message is displayed on the console.
-//					m.initWorkRotx(m.degToRad(menu.rotate("x")));
-//				break;
-//				case 4:
-//					// If entering this selection for 2D matrices, the matrix
-//					// added to the array defaults to the identity matrix, and
-//					// an error message is displayed on the console.
-//					m.initWorkRoty(m.degToRad(menu.rotate("y")));
-//				break;
-//				case 5:
-//					m.initWorkRotz(m.degToRad(menu.rotate("z")));
-//				break;
-//				case 6:
-//					System.out.println("Initial point: " + p);
-//					n = 1;
-//					for(Iterator<Matrix> i = array.iterator(); i.hasNext();)
-//					{
-//						// m starts this loop as identity, then pre-multiplies
-//						// all of the matrices in the array
-//						Matrix t = i.next();
-//	//Next line prints each transformation for debugging
-//	//					System.out.println("Transformation " + n++ + ":\n" + t);
-//						m.multiply(t);
-//					}
-//					System.out.println("Composite Transformation:\n" + m);
-//					m.multiply(p);	// Get final point transformation
-//					System.out.println("Final position: " + p);
-//					n = 0;	// Reset for inputting additional matrices
-//				break;
-//				case 7:
-//					quit = 0;	// All done
-//				break;
-//			}
-//			if(u != 6) // Only add to array if m is valid
-//			{
-//				array.add(m);
-//			}
-//		}
+		String[] s = {"DIM", "2"}; 
+		command(s);
 	}
-	
-//	public int doMenu(int n)
-//	{
-//		int m;
-//		do
-//		{
-//			if(n == 0)
-//			{
-//				System.out.println("--------------------------------");
-//				System.out.println("Welcome to Transformation System");
-//				System.out.println("--------------------------------");
-//				System.out.println("Please choose a transformation");
-//			}
-//			else
-//			{
-//				System.out.println("Enter selection for transformation " + n);
-//			}
-//			System.out.println("1) Translate");
-//			System.out.println("2) Scale");
-//			System.out.println("3) Rotate around X");
-//			System.out.println("4) Rotate around Y");
-//			System.out.println("5) Rotate around Z");
-//			System.out.println("6) Calculate");
-//			System.out.println("7) Exit Program");
-//			System.out.println("Enter selection: ");
-//			Scanner scan = new Scanner(System.in);
-//			String str = scan.nextLine();
-//			m = Integer.parseInt(str);
-//		} while(m < 1 || m > 7);
-//		return m;
-//	}
-//	
-//	public double rotate(String s)
-//	{
-//		System.out.print("Enter +/- degrees about " + s + " axis: ");
-//		str = scan.nextLine();
-//		return Double.parseDouble(str);
-//	}
 
 	public int getDim() {
 		return dim;
 	}
 
-	public void setDim(int dim) {
-		this.dim = dim;
-		if(dim == 2)
-		{
-			p = new Point2D(0, 0);
-			x = new Point2D(0, 0);
-		}
-		else
-		{
-			p = new Point3D(0, 0, 0);
-			x = new Point3D(0, 0, 0);
-		}
-	}
-	
 	public void setOperationVector(Point p) {
 		x = p;
+	}
+	
+	private double[] cvtStringsToFloats(String[] s) {
+		// This function ignores the first string in the array
+		// because the string should come straight from the GUI.
+		double[] f = new double[this.dim];
+		f[0] = Double.parseDouble(s[1]);
+		f[1] = Double.parseDouble(s[2]);
+		if(s.length == this.dim) { 
+			f[2] = Double.parseDouble(s[3]);
+		}
+		return f;
+	}
+	
+	public String command(String[] s) {
+		// Important function of the interface class.
+		// Convert the strings in the parameter array into the matrices needed
+		// to be pushed onto the stack. This function also dictates to the
+		// rest of the matrix code when to pre-multiply.
+		// First element in array is a string that instructs the interface
+		// what to do.
+		// The other elements are values to be placed into the matrix.
+		String retMsg = "BAD COMMAND";
+		if(s[0] == "TRANS") {
+			x.set(cvtStringsToFloats(s));
+			m.initWorkTranslate(x);
+			retMsg = s[0]; // Confirm completion
+		}
+		if(s[0] == "SCALE") {
+			x.set(cvtStringsToFloats(s));
+			m.initWorkScale(x);
+			retMsg = s[0]; // Confirm completion
+		}
+		if(s[0] == "ROTX") {
+			m.initWorkRotx(m.degToRad(Double.parseDouble(s[1])));
+			retMsg = s[0]; // Confirm completion
+		}
+		if(s[0] == "ROTY") {
+			m.initWorkRoty(m.degToRad(Double.parseDouble(s[1])));
+			retMsg = s[0]; // Confirm completion
+		}
+		if(s[0] == "ROTZ") {
+			m.initWorkRotz(m.degToRad(Double.parseDouble(s[1])));
+			retMsg = s[0]; // Confirm completion
+		}
+		if(s[0] == "CALC") {
+			retMsg = "Initial point: " + p + "\n";
+			for(Iterator<Matrix> i = array.iterator(); i.hasNext();)
+			{
+				// m starts this loop as identity, then pre-multiplies
+				// all of the matrices in the array
+				Matrix t = i.next();
+//Next line prints each transformation for debugging
+//					System.out.println("Transformation " + n++ + ":\n" + t);
+				m.multiply(t);
+			}
+			retMsg += "Composite Transformation:\n" + m + "\n";
+			m.multiply(p);	// Get final point transformation
+			retMsg += "Final position: " + p + "\n";
+		}
+		if(s[0] == "DIM") {
+			this.dim = Integer.parseInt(s[1]);
+			if(dim == 2)
+			{
+				p = new Point2D(0, 0);
+				x = new Point2D(0, 0);
+				m = new Matrix2D();
+				array.clear();
+				retMsg = s[0]; // Confirm completion
+			}
+			if(dim == 3)
+			{
+				p = new Point3D(0, 0, 0);
+				x = new Point3D(0, 0, 0);
+				m = new Matrix3D();
+				array.clear();
+				retMsg = s[0]; // Confirm completion
+			}
+		}
+		return retMsg;
 	}
 }
