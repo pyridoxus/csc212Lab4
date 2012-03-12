@@ -18,6 +18,8 @@ public class NumberPad extends JPanel {
 	//var = -1 if nothing has been entered yet (or all has been deleted)
 	private int var = -1;		// Keep track of which variable gets input
 	private int maxVar = 2;
+	private int restoreMaxVar = 2;	// Used to restore maxVar after rotation
+	private String mode = "INIT";	// Function mode
 	public NumberPad() {
 		button = new JButton[21];
 		String[] privS = {"<", "Clear", ">", "7", "8", "9", "4", "5", "6", "1",
@@ -53,6 +55,8 @@ public class NumberPad extends JPanel {
 		button[12].addActionListener(new Listener0()); // Number button
 		button[13].addActionListener(new ListenerDot()); //Decimal point
 		button[14].addActionListener(new ListenerNegate()); // Negate
+		button[15].addActionListener(new ListenerTrans()); // Translate
+		button[20].addActionListener(new ListenerRotZ()); // Rotate Z axis
 	}
 	
 	public void setState(String state) {
@@ -60,6 +64,7 @@ public class NumberPad extends JPanel {
 		clear();
 		if(state == "2D") maxVar = 2;
 		else maxVar = 3;
+		restoreMaxVar = maxVar;
 		functionButtons(false);
 	}
 	
@@ -74,17 +79,23 @@ public class NumberPad extends JPanel {
 		System.out.println("work[0]: " + work[0]);
 		System.out.println("work[1]: " + work[1]);
 		System.out.println("work[2]: " + work[2]);
+		System.out.println("mode: " + mode);
 	}
 
 	private String buildText(){
 		String[] s = new String[4];
 		if(var < 0) return "";	// -1 means nothing entered yet
-		s[0] = "( " + work[0] + "|, "; // Don't forget the cheesy cursor!
+		if(maxVar == 1) {
+			s[0] = work[0] + "|";	// Used for rotation degrees
+			s[1] = work[0] + " degrees";
+		}
 		if(maxVar == 2) {
+			s[0] = "( " + work[0] + "|, "; // Don't forget the cheesy cursor!
 			s[1] = "( " + work[0] + ", " + work[1] + "| )"; 
 			s[2] = "( " + work[0] + ", " + work[1] + " )"; 
 		}
 		if(maxVar == 3) {	// Show three coordinates
+			s[0] = "( " + work[0] + "|, "; // Don't forget the cheesy cursor!
 			s[1] = "( " + work[0] + ", " + work[1] + "|, )";
 			s[2] = "( " + work[0] + ", " + work[1] + ", " + work[2] + "| )";
 			s[3] = "( " + work[0] + ", " + work[1] + ", " + work[2] + " )";
@@ -97,15 +108,23 @@ public class NumberPad extends JPanel {
 	private void functionButtons(boolean set) {
 		for(int i = 15; i < 21; i++) {
 			// Cannot do x or y axis rotation in 2D mode, so disable buttons
-			if((i == 18 || i == 19) && (var == 2)) button[i].setEnabled(false); 
+			if((i == 18 || i == 19) && (maxVar != 3)) button[i].setEnabled(false); 
 			else button[i].setEnabled(set);
 		}
 	}
 	
 	private void clear() {
 		textArea.setText("");
-		textBox.setText("");
+		textBox.setText("Enter initial point...");
 		var = 0;
+		mode = "INIT";
+		for(int i = 0; i < 3; i++) work[i] = "";
+	}
+	
+	private void pushMatrix(){
+		// Use "mode" to figure out the correct matrix to push on the stack
+		textArea.append(mode + " " + textBox.getText() + "\n");
+		var = -1;
 		for(int i = 0; i < 3; i++) work[i] = "";
 	}
 	
@@ -323,6 +342,38 @@ public class NumberPad extends JPanel {
   	  			textBox.setText(buildText());
   			}
   			debugPrint("ListenerNegate");
+   		}
+   	}
+
+   	// 	Listener for Translate Button
+   	private class ListenerTrans implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var == maxVar) {	// All entered?
+  				pushMatrix(); // Push the previous work onto the stack
+	  			textBox.setText("Enter translation vector...");
+	  			functionButtons(false);
+  				maxVar = restoreMaxVar;
+  				mode = "TRANS";
+  			}
+  			debugPrint("ListenerTrans");
+   		}
+   	}
+
+   	// 	Listener for Translate Button
+   	private class ListenerRotZ implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var == maxVar) {	// All entered?
+	  			// Push the textBox into textArea here and add appropriate matrix
+	  			// to the stack.
+				pushMatrix(); // Push the previous work onto the stack
+	  			textBox.setText("Enter degrees...");
+	  			functionButtons(false);
+	  			maxVar = 1;
+	  			mode = "ROTZ";
+  			}
+  			debugPrint("ListenerRotZ");
    		}
    	}
 }
