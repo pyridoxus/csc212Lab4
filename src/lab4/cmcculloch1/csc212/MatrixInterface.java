@@ -132,4 +132,8 @@ public class MatrixInterface {
 			x = new Point3D(0, 0, 0);
 		}
 	}
+	
+	public void setOperationVector(Point p) {
+		x = p;
+	}
 }
