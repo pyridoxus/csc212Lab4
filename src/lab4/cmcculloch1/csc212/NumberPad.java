@@ -56,6 +56,10 @@ public class NumberPad extends JPanel {
 		button[13].addActionListener(new ListenerDot()); //Decimal point
 		button[14].addActionListener(new ListenerNegate()); // Negate
 		button[15].addActionListener(new ListenerTrans()); // Translate
+		button[16].addActionListener(new ListenerScale()); // Scale
+		button[17].addActionListener(new ListenerCalculate()); // Calculate
+		button[18].addActionListener(new ListenerRotX()); // Rotate X axis
+		button[19].addActionListener(new ListenerRotY()); // Rotate Y axis
 		button[20].addActionListener(new ListenerRotZ()); // Rotate Z axis
 	}
 	
@@ -106,9 +110,14 @@ public class NumberPad extends JPanel {
 	}
 	
 	private void functionButtons(boolean set) {
+		for(int i = 3; i < 16; i++) {
+			button[i].setEnabled(!set);
+		}
 		for(int i = 15; i < 21; i++) {
 			// Cannot do x or y axis rotation in 2D mode, so disable buttons
-			if((i == 18 || i == 19) && (maxVar != 3)) button[i].setEnabled(false); 
+			if((i == 18 || i == 19) && (restoreMaxVar != 3)) {
+				button[i].setEnabled(false); 
+			}
 			else button[i].setEnabled(set);
 		}
 	}
@@ -168,12 +177,6 @@ public class NumberPad extends JPanel {
   				if(work[var].length() == 0) work[var] = "0.0";
   				var++;
   	  			textBox.setText(buildText());
-  			}
-  			else
-  			{
-  				// Disable all number buttons because there is nothing else
-  				// that should be entered.
-  				
   			}
   			debugPrint("NextListener");
    		}
@@ -360,7 +363,71 @@ public class NumberPad extends JPanel {
    		}
    	}
 
-   	// 	Listener for Translate Button
+   	// 	Listener for Scale Button
+   	private class ListenerScale implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var == maxVar) {	// All entered?
+  				pushMatrix(); // Push the previous work onto the stack
+	  			textBox.setText("Enter scale vector...");
+	  			functionButtons(false);
+  				maxVar = restoreMaxVar;
+  				mode = "SCALE";
+  			}
+  			debugPrint("ListenerScale");
+   		}
+   	}
+
+   	// 	Listener for Calculate Button
+   	private class ListenerCalculate implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var == maxVar) {	// All entered?
+  				pushMatrix(); // Push the previous work onto the stack
+	  			textArea.append("Calculating...\n");
+	  			functionButtons(false);
+  				maxVar = restoreMaxVar;
+  				mode = "CALC";
+  			}
+  			debugPrint("ListenerCalculate");
+   		}
+   	}
+
+   	// 	Listener for RotX Button
+   	private class ListenerRotX implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var == maxVar) {	// All entered?
+	  			// Push the textBox into textArea here and add appropriate matrix
+	  			// to the stack.
+				pushMatrix(); // Push the previous work onto the stack
+	  			textBox.setText("Enter degrees...");
+	  			functionButtons(false);
+	  			maxVar = 1;
+	  			mode = "ROTX";
+  			}
+  			debugPrint("ListenerRotX");
+   		}
+   	}
+
+   	// 	Listener for RotY Button
+   	private class ListenerRotY implements ActionListener {
+  		@Override
+   		public void actionPerformed(ActionEvent e) {
+  			if(var == maxVar) {	// All entered?
+	  			// Push the textBox into textArea here and add appropriate matrix
+	  			// to the stack.
+				pushMatrix(); // Push the previous work onto the stack
+	  			textBox.setText("Enter degrees...");
+	  			functionButtons(false);
+	  			maxVar = 1;
+	  			mode = "ROTY";
+  			}
+  			debugPrint("ListenerRotY");
+   		}
+   	}
+
+   	// 	Listener for RotZ Button
    	private class ListenerRotZ implements ActionListener {
   		@Override
    		public void actionPerformed(ActionEvent e) {
