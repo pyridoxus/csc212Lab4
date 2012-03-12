@@ -34,6 +34,7 @@ public class NumberPad extends JPanel {
 		}
 		button[17].setForeground(Color.red);
 		for(int i = 0; i < 3; i++) work[i] = "";
+		functionButtons(false);
 	}
 	
 	private void initListener(int i) {
@@ -88,18 +89,11 @@ public class NumberPad extends JPanel {
 	}
 	
 	public void setState(String state) {
-		// Stack and working variables are cleared everytime the state changes.
+		// Stack and working variables are cleared every time the state changes.
 		clear();
-		if(state == "2D") {
-			button[18].setEnabled(false);
-			button[19].setEnabled(false);
-			maxVar = 2;
-		}
-		else {
-			button[18].setEnabled(true);
-			button[19].setEnabled(true);
-			maxVar = 3;
-		}
+		if(state == "2D") maxVar = 2;
+		else maxVar = 3;
+		functionButtons(false);
 	}
 	
 	public void setTexts(JTextArea textBox, JTextArea textArea) {
@@ -128,7 +122,17 @@ public class NumberPad extends JPanel {
 			s[2] = "( " + work[0] + ", " + work[1] + ", " + work[2] + "| )";
 			s[3] = "( " + work[0] + ", " + work[1] + ", " + work[2] + " )";
 		}
+		if(var == maxVar) functionButtons(true);
+		else functionButtons(false);
 		return s[var];
+	}
+	
+	private void functionButtons(boolean set) {
+		for(int i = 15; i < 21; i++) {
+			// Cannot do x or y axis rotation in 2D mode, so disable buttons
+			if((i == 18 || i == 19) && (var == 2)) button[i].setEnabled(false); 
+			else button[i].setEnabled(set);
+		}
 	}
 	
 	private void clear() {
