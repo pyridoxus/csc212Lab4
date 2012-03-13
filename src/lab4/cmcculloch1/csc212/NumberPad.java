@@ -191,6 +191,10 @@ public class NumberPad extends JPanel {
   				var++;
   	  			textBox.setText(buildText());
   			}
+  			else {
+  				String[] s = { mode, work[0], work[1], work[2] };
+  				if(mode == "INIT") pushMatrix(s);
+  			}
   			debugPrint("NextListener");
    		}
    	}

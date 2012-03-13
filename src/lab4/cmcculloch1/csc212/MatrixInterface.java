@@ -44,26 +44,53 @@ public class MatrixInterface {
 		// what to do.
 		// The other elements are values to be placed into the matrix.
 		String retMsg = "BAD COMMAND";
+		if(s[0] == "DIM") {
+			this.dim = Integer.parseInt(s[1]);
+			if(dim == 2)
+			{
+				p = new Point2D(0, 0);
+				x = new Point2D(0, 0);
+				retMsg = s[0]; // Confirm completion
+			}
+			if(dim == 3)
+			{
+				p = new Point3D(0, 0, 0);
+				x = new Point3D(0, 0, 0);
+				retMsg = s[0]; // Confirm completion
+			}
+			array.clear();
+		}
+		if(dim == 2) m = new Matrix2D();	// Always new matrix
+		if(dim == 3) m = new Matrix3D();	// Always new matrix
+		if(s[0] == "INIT"){
+			p.set(cvtStringsToFloats(s));
+			retMsg = s[0]; // Confirm completion
+		}
 		if(s[0] == "TRANS") {
 			x.set(cvtStringsToFloats(s));
 			m.initWorkTranslate(x);
+			array.add(m);
 			retMsg = s[0]; // Confirm completion
 		}
 		if(s[0] == "SCALE") {
 			x.set(cvtStringsToFloats(s));
 			m.initWorkScale(x);
+			array.add(m);
 			retMsg = s[0]; // Confirm completion
 		}
 		if(s[0] == "ROTX") {
 			m.initWorkRotx(m.degToRad(Double.parseDouble(s[1])));
+			array.add(m);
 			retMsg = s[0]; // Confirm completion
 		}
 		if(s[0] == "ROTY") {
 			m.initWorkRoty(m.degToRad(Double.parseDouble(s[1])));
+			array.add(m);
 			retMsg = s[0]; // Confirm completion
 		}
 		if(s[0] == "ROTZ") {
 			m.initWorkRotz(m.degToRad(Double.parseDouble(s[1])));
+			array.add(m);
 			retMsg = s[0]; // Confirm completion
 		}
 		if(s[0] == "CALC") {
@@ -73,6 +100,7 @@ public class MatrixInterface {
 				// m starts this loop as identity, then pre-multiplies
 				// all of the matrices in the array
 				Matrix t = i.next();
+				System.out.println(t);
 //Next line prints each transformation for debugging
 //					System.out.println("Transformation " + n++ + ":\n" + t);
 				m.multiply(t);
@@ -80,25 +108,6 @@ public class MatrixInterface {
 			retMsg += "Composite Transformation:\n" + m + "\n";
 			m.multiply(p);	// Get final point transformation
 			retMsg += "Final position: " + p + "\n";
-		}
-		if(s[0] == "DIM") {
-			this.dim = Integer.parseInt(s[1]);
-			if(dim == 2)
-			{
-				p = new Point2D(0, 0);
-				x = new Point2D(0, 0);
-				m = new Matrix2D();
-				array.clear();
-				retMsg = s[0]; // Confirm completion
-			}
-			if(dim == 3)
-			{
-				p = new Point3D(0, 0, 0);
-				x = new Point3D(0, 0, 0);
-				m = new Matrix3D();
-				array.clear();
-				retMsg = s[0]; // Confirm completion
-			}
 		}
 		return retMsg;
 	}
