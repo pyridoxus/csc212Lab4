@@ -2,9 +2,6 @@ package lab4.cmcculloch1.csc212;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -47,8 +44,6 @@ public class ControlPanel extends JPanel {
         // GroupLayout. Then, I wouldn't have to pass numberPad anywhere...
         topPanel.setNumberPad(numberPad);
         
-        textArea.setText("Hello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\nHello World!\n");
-        textBox.setText("(3.14159265358979, 3.14159265358979, 3.14159265358979)");
         add(topPanel);
         add(scrollPane);
         add(textBox);

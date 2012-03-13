@@ -14,7 +14,7 @@ public class NumberPad extends JPanel {
     private JButton[] button;
 	private JTextArea textArea;
 	private JTextArea textBox;
-	private String[] work = new String[3];	// Working strings for variables
+	private String[] work = { "0.0", "0.0", "0.0" };
 	//var = -1 if nothing has been entered yet (or all has been deleted)
 	private int var = -1;		// Keep track of which variable gets input
 	private int maxVar = 2;
@@ -72,6 +72,8 @@ public class NumberPad extends JPanel {
 		else maxVar = 3;
 		restoreMaxVar = maxVar;
 		functionButtons(false);
+		String[] s = { "DIM", Integer.toString(maxVar), "0.0", "0.0" };
+		MI.command(s);
 	}
 	
 	public void setTexts(JTextArea textBox, JTextArea textArea) {
@@ -79,6 +81,12 @@ public class NumberPad extends JPanel {
 		this.textBox = textBox;
 	}
 
+	private String[] getCommand() {
+		System.out.println(mode + work[0] + work[1] + work[2]);
+		String[] s = { mode, work[0], work[1], work[2] };
+		return s;
+	}
+	
 	private void debugPrint(String loc) {
 		System.out.println("DEBUG inside " + loc);
 		System.out.println("var: " + var);
@@ -137,11 +145,11 @@ public class NumberPad extends JPanel {
 	private void pushMatrix(String[] s){
 		// Use "mode" to figure out the correct matrix to push on the stack
 		String r;
-		textArea.append(mode + " " + textBox.getText() + "\n");
 		r = MI.command(s);
 		if(mode != "CALC") {
+			textArea.append(mode + " " + textBox.getText() + "\n");
 			if(mode != r)
-			textArea.append("Error attempting " + mode + "\n");
+				textArea.append("Error attempting " + mode + "\n");
 		}
 		else {
 			textArea.append(r); // Append the results to the textArea
@@ -192,8 +200,7 @@ public class NumberPad extends JPanel {
   	  			textBox.setText(buildText());
   			}
   			else {
-  				String[] s = { mode, work[0], work[1], work[2] };
-  				if(mode == "INIT") pushMatrix(s);
+  				if(mode == "INIT") pushMatrix(getCommand());
   			}
   			debugPrint("NextListener");
    		}
@@ -370,8 +377,7 @@ public class NumberPad extends JPanel {
   		@Override
    		public void actionPerformed(ActionEvent e) {
   			if(var == maxVar) {	// All entered?
-  				String[] s = { mode, work[0], work[1], work[2] };
-  				pushMatrix(s); // Push the previous work onto the stack
+  				pushMatrix(getCommand()); // Push the previous work onto the stack
 	  			textBox.setText("Enter translation vector...");
 	  			functionButtons(false);
   				maxVar = restoreMaxVar;
@@ -386,8 +392,7 @@ public class NumberPad extends JPanel {
   		@Override
    		public void actionPerformed(ActionEvent e) {
   			if(var == maxVar) {	// All entered?
-  				String[] s = { mode, work[0], work[1], work[2] };
-  				pushMatrix(s); // Push the previous work onto the stack
+  				pushMatrix(getCommand()); // Push the previous work onto the stack
 	  			textBox.setText("Enter scale vector...");
 	  			functionButtons(false);
   				maxVar = restoreMaxVar;
@@ -422,8 +427,7 @@ public class NumberPad extends JPanel {
   			if(var == maxVar) {	// All entered?
 	  			// Push the textBox into textArea here and add appropriate matrix
 	  			// to the stack.
-  				String[] s = { mode, work[0], work[1], work[2] };
-  				pushMatrix(s); // Push the previous work onto the stack
+  				pushMatrix(getCommand()); // Push the previous work onto the stack
 	  			textBox.setText("Enter degrees...");
 	  			functionButtons(false);
 	  			maxVar = 1;
@@ -440,8 +444,7 @@ public class NumberPad extends JPanel {
   			if(var == maxVar) {	// All entered?
 	  			// Push the textBox into textArea here and add appropriate matrix
 	  			// to the stack.
-  				String[] s = { mode, work[0], work[1], work[2] };
-  				pushMatrix(s); // Push the previous work onto the stack
+  				pushMatrix(getCommand()); // Push the previous work onto the stack
 	  			textBox.setText("Enter degrees...");
 	  			functionButtons(false);
 	  			maxVar = 1;
@@ -458,8 +461,7 @@ public class NumberPad extends JPanel {
   			if(var == maxVar) {	// All entered?
 	  			// Push the textBox into textArea here and add appropriate matrix
 	  			// to the stack.
-  				String[] s = { mode, work[0], work[1], work[2] };
-  				pushMatrix(s); // Push the previous work onto the stack
+  				pushMatrix(getCommand()); // Push the previous work onto the stack
 	  			textBox.setText("Enter degrees...");
 	  			functionButtons(false);
 	  			maxVar = 1;

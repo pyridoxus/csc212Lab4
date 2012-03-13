@@ -9,7 +9,7 @@ public class Lab4 {
 	 */
 	public static void main(String[] args) {
 		// Application frame
-        JFrame frame = new JFrame("Shape Areas");
+        JFrame frame = new JFrame("Transformation Calculator");
         frame.setLocation(500, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        
