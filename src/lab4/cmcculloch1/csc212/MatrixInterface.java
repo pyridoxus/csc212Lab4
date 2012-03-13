@@ -35,6 +35,19 @@ public class MatrixInterface {
 		return f;
 	}
 	
+	private String splitP(){
+		// If the user requests that the point is kept current, then this
+		// function returns the point in string form for the NumberPad object
+		// to use.
+		double[] d = p.get();
+		String s = "POINT" + "_" + Double.toString(d[0]) + "_" + 
+				Double.toString(d[1]) + "_";
+		if(p.getSize() == 4) {
+			s += Double.toString(d[2]);
+		}
+		return s;
+	}
+	
 	public String command(String[] s) {
 		// Important function of the interface class.
 		// Convert the strings in the parameter array into the matrices needed
@@ -110,7 +123,7 @@ public class MatrixInterface {
 			retMsg += "Final position: " + p + "\n";
 		}
 		if(s[0] == "POINT") {
-			retMsg = p.toString();
+			retMsg = splitP();
 		}
 		return retMsg;
 	}

@@ -70,7 +70,7 @@ public class NumberPad extends JPanel {
 		// Stack and working variables are cleared every time the state changes.
 		if(state == "2D") maxVar = 2;
 		else maxVar = 3;
-		clear(true); // also initialize the point
+		clear();
 		restoreMaxVar = maxVar;
 		functionButtons(false);
 		String[] s = { "DIM", Integer.toString(maxVar), "0.0", "0.0" };
@@ -132,19 +132,14 @@ public class NumberPad extends JPanel {
 		}
 	}
 	
-	private void clear(boolean clearPoint) {
+	private void clear() {
 		textArea.setText("");
 		mode = "INIT";
 		String[] s = { "DIM", Integer.toString(restoreMaxVar) };
 		MI.command(s);
-		if(clearPoint == true) {
-			var = 0;
-			for(int i = 0; i < 3; i++) work[i] = "";
-			textBox.setText("Enter initial point...");
-		}
-		else {
-			var = maxVar;
-		}
+		var = 0;
+		for(int i = 0; i < 3; i++) work[i] = "";
+		textBox.setText("Enter initial point...");
 	}
 	
 	private void pushMatrix(String[] s){
@@ -160,10 +155,37 @@ public class NumberPad extends JPanel {
 			textArea.append(r); // Append the results to the textArea
 		}
 		if(mode == "POINT") {
+			
 			System.out.println(r);
 		}
 		var = -1;
 		for(int i = 0; i < 3; i++) work[i] = "";
+	}
+	
+	private void fetchPoint() {
+		String[] s = { mode, "", "", "" };
+		String r = MI.command(s);
+		String[] t = r.split("_");
+		work[0] = t[1];
+		work[1] = t[2];
+		System.out.println(r);
+		System.out.println("LENGTH!!!!!" + t.length);
+		if(t.length == 3) {
+			System.out.println("______________ length 3");
+			work[2] = "";
+			var = 2;
+			maxVar = 2;
+			restoreMaxVar = 2;
+		}
+		else {
+			System.out.println("______________ length 4");
+			work[2] = t[3];
+			var = 3;
+			maxVar = 3;
+			restoreMaxVar = 3;
+		}
+		buildText();
+		mode = "INIT";
 	}
 	
 	// 	Listener for DeleteButton
@@ -190,16 +212,13 @@ public class NumberPad extends JPanel {
    	private class ClearListener implements ActionListener {
   		@Override
    		public void actionPerformed(ActionEvent e) {
+  			clear();
   			if(JOptionPane.showConfirmDialog(null,
   					"Do you want to keep the current point position?",
   					"Clear Point Data?", JOptionPane.YES_NO_OPTION,
   					JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-  	  			clear(true);
-  			}
-  			else {
   				mode = "POINT";
-  				pushMatrix(getCommand());
-  				clear(false); // Don't initialize the current point position
+  				fetchPoint();
   			}
    	  		debugPrint("ClearListener");
    		}
