@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -67,9 +68,9 @@ public class NumberPad extends JPanel {
 	
 	public void setState(String state) {
 		// Stack and working variables are cleared every time the state changes.
-		clear();
 		if(state == "2D") maxVar = 2;
 		else maxVar = 3;
+		clear(true); // also initialize the point
 		restoreMaxVar = maxVar;
 		functionButtons(false);
 		String[] s = { "DIM", Integer.toString(maxVar), "0.0", "0.0" };
@@ -82,7 +83,6 @@ public class NumberPad extends JPanel {
 	}
 
 	private String[] getCommand() {
-		System.out.println(mode + work[0] + work[1] + work[2]);
 		String[] s = { mode, work[0], work[1], work[2] };
 		return s;
 	}
@@ -132,14 +132,19 @@ public class NumberPad extends JPanel {
 		}
 	}
 	
-	private void clear() {
+	private void clear(boolean clearPoint) {
 		textArea.setText("");
-		textBox.setText("Enter initial point...");
-		var = 0;
 		mode = "INIT";
 		String[] s = { "DIM", Integer.toString(restoreMaxVar) };
 		MI.command(s);
-		for(int i = 0; i < 3; i++) work[i] = "";
+		if(clearPoint == true) {
+			var = 0;
+			for(int i = 0; i < 3; i++) work[i] = "";
+			textBox.setText("Enter initial point...");
+		}
+		else {
+			var = maxVar;
+		}
 	}
 	
 	private void pushMatrix(String[] s){
@@ -153,6 +158,9 @@ public class NumberPad extends JPanel {
 		}
 		else {
 			textArea.append(r); // Append the results to the textArea
+		}
+		if(mode == "POINT") {
+			System.out.println(r);
 		}
 		var = -1;
 		for(int i = 0; i < 3; i++) work[i] = "";
@@ -182,7 +190,17 @@ public class NumberPad extends JPanel {
    	private class ClearListener implements ActionListener {
   		@Override
    		public void actionPerformed(ActionEvent e) {
-  			clear();
+  			if(JOptionPane.showConfirmDialog(null,
+  					"Do you want to keep the current point position?",
+  					"Clear Point Data?", JOptionPane.YES_NO_OPTION,
+  					JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+  	  			clear(true);
+  			}
+  			else {
+  				mode = "POINT";
+  				pushMatrix(getCommand());
+  				clear(false); // Don't initialize the current point position
+  			}
    	  		debugPrint("ClearListener");
    		}
    	}

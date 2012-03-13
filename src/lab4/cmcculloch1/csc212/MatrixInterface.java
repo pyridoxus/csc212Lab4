@@ -109,6 +109,9 @@ public class MatrixInterface {
 			m.multiply(p);	// Get final point transformation
 			retMsg += "Final position: " + p + "\n";
 		}
+		if(s[0] == "POINT") {
+			retMsg = p.toString();
+		}
 		return retMsg;
 	}
 }

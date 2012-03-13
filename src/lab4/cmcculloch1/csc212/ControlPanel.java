@@ -20,7 +20,7 @@ public class ControlPanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		// Large text area to contain history of actions.
-		textArea = new JTextArea(5, 20);
+		textArea = new JTextArea(10, 80);
 		JScrollPane scrollPane = new JScrollPane(textArea); 
 		textArea.setEditable(false);
 		Font font = new Font("Monospaced", Font.PLAIN, 12);
