@@ -70,11 +70,13 @@ public class NumberPad extends JPanel {
 		// Stack and working variables are cleared every time the state changes.
 		if(state == "2D") maxVar = 2;
 		else maxVar = 3;
-		clear();
+		System.out.println(state);
 		restoreMaxVar = maxVar;
 		functionButtons(false);
 		String[] s = { "DIM", Integer.toString(maxVar), "0.0", "0.0" };
-		MI.command(s);
+		System.out.println(MI.command(s));
+		clear();
+		setEnableArrows(true);	// Arrows could be disabled when changing dim
 	}
 	
 	public void setTexts(JTextArea textBox, JTextArea textArea) {
@@ -120,6 +122,8 @@ public class NumberPad extends JPanel {
 	}
 	
 	private void functionButtons(boolean set) {
+		button[0].setEnabled(!set);
+		button[2].setEnabled(!set);
 		for(int i = 3; i < 16; i++) {
 			button[i].setEnabled(!set);
 		}
@@ -136,8 +140,8 @@ public class NumberPad extends JPanel {
 		textArea.setText("");
 		mode = "INIT";
 		String[] s = { "DIM", Integer.toString(restoreMaxVar) };
-		MI.command(s);
-		var = 0;
+		System.out.println(MI.command(s));
+		var = -1;
 		for(int i = 0; i < 3; i++) work[i] = "";
 		textBox.setText("Enter initial point...");
 	}
@@ -184,8 +188,13 @@ public class NumberPad extends JPanel {
 			maxVar = 3;
 			restoreMaxVar = 3;
 		}
-		buildText();
+		textBox.setText(buildText());
 		mode = "INIT";
+	}
+	
+	private void setEnableArrows(boolean state) {
+		button[0].setEnabled(state);	// Button disabled after calculate
+		button[2].setEnabled(state);	// Button disabled after calculate
 	}
 	
 	// 	Listener for DeleteButton
@@ -212,14 +221,24 @@ public class NumberPad extends JPanel {
    	private class ClearListener implements ActionListener {
   		@Override
    		public void actionPerformed(ActionEvent e) {
-  			clear();
   			if(JOptionPane.showConfirmDialog(null,
   					"Do you want to keep the current point position?",
   					"Clear Point Data?", JOptionPane.YES_NO_OPTION,
   					JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
   				mode = "POINT";
   				fetchPoint();
+  				textArea.setText("");
+  				mode = "INIT";
+  				String[] s = { "DIM", Integer.toString(restoreMaxVar) };
+  				MI.command(s);
+  				var = restoreMaxVar;
+  				setEnableArrows(false);
   			}
+  			else {
+  	  			clear();
+  	  			functionButtons(false);
+  			}
+//  			setEnableArrows(true);
    	  		debugPrint("ClearListener");
    		}
    	}
@@ -444,14 +463,20 @@ public class NumberPad extends JPanel {
   		@Override
    		public void actionPerformed(ActionEvent e) {
   			if(var == maxVar) {	// All entered?
+  				textBox.setText(buildText());
   				String[] s = { mode, work[0], work[1], work[2] };
+  				System.out.println(work[2] + " 	should be valid");
   				pushMatrix(s); // Push the previous work onto the stack
 	  			textArea.append("Calculating...\n");
 	  			functionButtons(false);
   				maxVar = restoreMaxVar;
+  				System.out.println(Integer.toString(maxVar));
   				mode = "CALC";
   				s[0] = mode;
   				pushMatrix(s); // Append results to textArea
+  				for(int i = 0; i < 20; i++) {
+  					if(i != 1) button[i].setEnabled(false);
+  				}
   			}
   			debugPrint("ListenerCalculate");
    		}

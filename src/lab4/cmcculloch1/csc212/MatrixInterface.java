@@ -29,7 +29,7 @@ public class MatrixInterface {
 		double[] f = new double[this.dim];
 		f[0] = Double.parseDouble(s[1]);
 		f[1] = Double.parseDouble(s[2]);
-		if(s.length == this.dim) { 
+		if(this.dim == 3) { 
 			f[2] = Double.parseDouble(s[3]);
 		}
 		return f;
@@ -42,7 +42,7 @@ public class MatrixInterface {
 		double[] d = p.get();
 		String s = "POINT" + "_" + Double.toString(d[0]) + "_" + 
 				Double.toString(d[1]) + "_";
-		if(p.getSize() == 4) {
+		if(p.getSize() == 3) {
 			s += Double.toString(d[2]);
 		}
 		return s;
