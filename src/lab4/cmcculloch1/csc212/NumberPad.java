@@ -70,11 +70,11 @@ public class NumberPad extends JPanel {
 		// Stack and working variables are cleared every time the state changes.
 		if(state == "2D") maxVar = 2;
 		else maxVar = 3;
-		System.out.println(state);
+//		System.out.println(state);
 		restoreMaxVar = maxVar;
 		functionButtons(false);
-		String[] s = { "DIM", Integer.toString(maxVar), "0.0", "0.0" };
-		System.out.println(MI.command(s));
+//		String[] s = { "DIM", Integer.toString(maxVar), "0.0", "0.0" };
+//		System.out.println(MI.command(s));
 		clear();
 		setEnableArrows(true);	// Arrows could be disabled when changing dim
 	}
@@ -122,8 +122,7 @@ public class NumberPad extends JPanel {
 	}
 	
 	private void functionButtons(boolean set) {
-		button[0].setEnabled(!set);
-		button[2].setEnabled(!set);
+		setEnableArrows(!set);
 		for(int i = 3; i < 16; i++) {
 			button[i].setEnabled(!set);
 		}
@@ -139,8 +138,8 @@ public class NumberPad extends JPanel {
 	private void clear() {
 		textArea.setText("");
 		mode = "INIT";
-		String[] s = { "DIM", Integer.toString(restoreMaxVar) };
-		System.out.println(MI.command(s));
+//		String[] s = { "DIM", Integer.toString(restoreMaxVar) };
+//		System.out.println(MI.command(s));
 		var = -1;
 		for(int i = 0; i < 3; i++) work[i] = "";
 		textBox.setText("Enter initial point...");
@@ -158,10 +157,9 @@ public class NumberPad extends JPanel {
 		else {
 			textArea.append(r); // Append the results to the textArea
 		}
-		if(mode == "POINT") {
-			
-			System.out.println(r);
-		}
+//		if(mode == "POINT") {
+//			System.out.println(r);
+//		}
 		var = -1;
 		for(int i = 0; i < 3; i++) work[i] = "";
 	}
@@ -172,17 +170,17 @@ public class NumberPad extends JPanel {
 		String[] t = r.split("_");
 		work[0] = t[1];
 		work[1] = t[2];
-		System.out.println(r);
-		System.out.println("LENGTH!!!!!" + t.length);
+//		System.out.println(r);
+//		System.out.println("LENGTH!!!!!" + t.length);
 		if(t.length == 3) {
-			System.out.println("______________ length 3");
+//			System.out.println("______________ length 3");
 			work[2] = "";
 			var = 2;
 			maxVar = 2;
 			restoreMaxVar = 2;
 		}
 		else {
-			System.out.println("______________ length 4");
+//			System.out.println("______________ length 4");
 			work[2] = t[3];
 			var = 3;
 			maxVar = 3;
@@ -465,12 +463,12 @@ public class NumberPad extends JPanel {
   			if(var == maxVar) {	// All entered?
   				textBox.setText(buildText());
   				String[] s = { mode, work[0], work[1], work[2] };
-  				System.out.println(work[2] + " 	should be valid");
+//  				System.out.println(work[2] + " 	should be valid");
   				pushMatrix(s); // Push the previous work onto the stack
 	  			textArea.append("Calculating...\n");
 	  			functionButtons(false);
   				maxVar = restoreMaxVar;
-  				System.out.println(Integer.toString(maxVar));
+//  				System.out.println(Integer.toString(maxVar));
   				mode = "CALC";
   				s[0] = mode;
   				pushMatrix(s); // Append results to textArea
