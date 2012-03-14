@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class TopPanel extends JPanel {
@@ -51,12 +50,8 @@ public class TopPanel extends JPanel {
    	private class QuitButtonListener implements ActionListener {
   		@Override
    		public void actionPerformed(ActionEvent e) {
-  			if(JOptionPane.showConfirmDialog(null,
-  					"Are you sure you want to quit?",
-  					"Exit?", JOptionPane.YES_NO_OPTION,
-  					JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-  	   			System.exit(0);
-  			}
+  			HelpDialog help = new HelpDialog();
+  			help.pack();
    		}
    	}
 }
