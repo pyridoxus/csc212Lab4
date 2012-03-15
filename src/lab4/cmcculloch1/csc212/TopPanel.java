@@ -12,14 +12,14 @@ public class TopPanel extends JPanel {
 
     private JComboBox dimensionBox;
     private JLabel dimensionLabel;
-    private JButton quitButton;
+    private JButton helpButton;
     private NumberPad numberPad;
     private Dimensions dim = new Dimensions();
     
     public TopPanel(int init){
-        // Quit button
-        quitButton = new JButton("Quit");
-    	quitButton.addActionListener(new QuitButtonListener());
+        // Help button
+        helpButton = new JButton("Help");
+    	helpButton.addActionListener(new HelpButtonListener());
         
 		// Shape dimension label and combo box
 		dimensionLabel = new JLabel("Select Dimension");
@@ -31,7 +31,7 @@ public class TopPanel extends JPanel {
 
     	add(dimensionLabel);
     	add(dimensionBox);
-        add(quitButton);
+        add(helpButton);
     }
     
     public void setNumberPad(NumberPad n){
@@ -46,12 +46,12 @@ public class TopPanel extends JPanel {
    		}
    	}
 
-    // 	Listener for quitButton
-   	private class QuitButtonListener implements ActionListener {
+    // 	Listener for helpButton
+   	private class HelpButtonListener implements ActionListener {
   		@Override
    		public void actionPerformed(ActionEvent e) {
-  			HelpDialog help = new HelpDialog();
-  			help.pack();
+  			HelpFrame help = new HelpFrame();
+  	        help.setVisible(true);
    		}
    	}
 }

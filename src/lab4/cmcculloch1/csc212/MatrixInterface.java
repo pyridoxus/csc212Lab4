@@ -113,8 +113,8 @@ public class MatrixInterface {
 				// m starts this loop as identity, then pre-multiplies
 				// all of the matrices in the array
 				Matrix t = i.next();
-				System.out.println(t);
-//Next line prints each transformation for debugging
+//Next lines print each transformation for debugging
+//				System.out.println(t);
 //					System.out.println("Transformation " + n++ + ":\n" + t);
 				m.multiply(t);
 			}

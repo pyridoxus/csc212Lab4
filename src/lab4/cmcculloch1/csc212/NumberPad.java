@@ -73,7 +73,8 @@ public class NumberPad extends JPanel {
 //		System.out.println(state);
 		restoreMaxVar = maxVar;
 		functionButtons(false);
-//		String[] s = { "DIM", Integer.toString(maxVar), "0.0", "0.0" };
+		String[] s = { "DIM", Integer.toString(maxVar), "0.0", "0.0" };
+		MI.command(s);
 //		System.out.println(MI.command(s));
 		clear();
 		setEnableArrows(true);	// Arrows could be disabled when changing dim
@@ -90,12 +91,18 @@ public class NumberPad extends JPanel {
 	}
 	
 	private void debugPrint(String loc) {
-		System.out.println("DEBUG inside " + loc);
-		System.out.println("var: " + var);
-		System.out.println("work[0]: " + work[0]);
-		System.out.println("work[1]: " + work[1]);
-		System.out.println("work[2]: " + work[2]);
-		System.out.println("mode: " + mode);
+		// Comment out this if statement (and braces) to activate the debug
+		// print. This is easier than commenting/uncommenting ALL of the 
+		// calls to this function.
+		if(loc.equals("abcd"))
+		{
+			System.out.println("DEBUG inside " + loc);
+			System.out.println("var: " + var);
+			System.out.println("work[0]: " + work[0]);
+			System.out.println("work[1]: " + work[1]);
+			System.out.println("work[2]: " + work[2]);
+			System.out.println("mode: " + mode);
+		}
 	}
 
 	private String buildText(){
@@ -138,8 +145,9 @@ public class NumberPad extends JPanel {
 	private void clear() {
 		textArea.setText("");
 		mode = "INIT";
-//		String[] s = { "DIM", Integer.toString(restoreMaxVar) };
+		String[] s = { "DIM", Integer.toString(restoreMaxVar) };
 //		System.out.println(MI.command(s));
+		MI.command(s);
 		var = -1;
 		for(int i = 0; i < 3; i++) work[i] = "";
 		textBox.setText("Enter initial point...");

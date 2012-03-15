@@ -1,0 +1,51 @@
+Transformation Calculator v1.0.0 by Craig McCulloch
+
+Help File (2012/03/14)
+					
+1) Begin by entering in the initial point. Start entering the x
+coordinate by clicking the number, negation, and decimal point 
+buttons. If at any time an error was entered, you may use the
+"<" button to delete the last character entered. You may continue
+to use the "<" to delete all coordinates if necessary.
+
+2) When finished entering the x coordinate, click the ">" button
+and enter the y coordinate.
+
+3) When finished entering the y coordinate, click the ">" button.
+If in 2D mode, go to step 5.
+
+4) Enter the z coordinate and click ">" when finished. 
+
+5) Select the desired transformation button that is now enabled.
+
+6) At this point, you will see the message "INIT" followed by your
+initial point in the large text area. You will also see a message 
+in the entry box prompting you to enter the vector or scalar that
+will be applied to the initial value using the selected function.
+When completed entering the appropriate data in similar fashion as
+stated in steps 1-5, you will again be prompted to select another
+transformation.
+
+7) Repeat step 6 as necessary to apply transformations to the
+matrix transformation stack. Each additional transformation will
+be applied (pre-multiplied) to the initial point.
+
+8) When completed entering the last value(s) for the last
+transformation, click the red "Calculate" button to see the final
+transformation matrix as well as the final result.
+
+9) If you click "Clear" you will be prompted whether or not to
+keep the final result for further transformations.
+
+10) At any time, you may click "Clear" to clear the stack and
+start over.
+
+11) To enter "0.0" for any scalar, simply press the ">" button.
+
+12) To change between "2D" and "3D", select the desired item in
+the drop down menu.
+
+Known Bugs
+1) Entering two decimal dots in one scalar will quietly fail when
+selecting the transformation. Workaround: Click on "Clear" to
+start over, then only enter one decimal point per scalar. 
